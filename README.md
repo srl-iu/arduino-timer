@@ -5,23 +5,27 @@ Arduino Timer is a simple, accurate and flexible timing system using an inexpens
 
 This timer accepts configuration commands via a serial interface. Most programming languages and environments offer serial connection libraries. This enables you to use the timer and collect the results with any system with a serial interface library. 
 
-The commands sent over the serial connection are minimalistic and look like::
+The commands sent over the serial connection are minimalistic and look like:
 
+````
   START A 0 5
   STOP A 1 5
+````
 
 'START' and 'STOP' are the main configuration commands, and each of these takes three parameters:
 
-     1. 'A' or 'D' 
-        (specify if the input pin is analog or digital)
-     2. 0 - 12
-        (the pin number)
-     3. 0 - 1024
-        (the threshold value to look for)
+ 1. 'A' or 'D' 
+    (specify if the input pin is analog or digital)
+ 2. 0 - 12
+    (the pin number)
+ 3. 0 - 1024
+    (the threshold value to look for)
 
-Once all of the configuration commands have been set, the timer is started with the 'RUN' command::
+Once all of the configuration commands have been set, the timer is started with the 'RUN' command:
 
+````
   RUN
+````
 
 Once all of the configured events have triggered, the result is printed back to the serial connection for logging. 
 
