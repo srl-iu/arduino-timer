@@ -39,6 +39,4 @@ Resources used (copies included):
   - [TimerOne](https://github.com/PaulStoffregen/TimerOne)
   - [Audiogen](https://github.com/casebeer/audiogen)  
 
-More documentation coming soon...
-
 See: [http://srl-iu.github.io/arduino-timer/](http://srl-iu.github.io/arduino-timer/) for more details.
