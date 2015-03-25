@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Arduino-timer : Arduino sketch files to implement timer functionality on the arduino. This can also be used to calibrate an arduino and measure the actual clock frequency for better accuracy.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Arduino-timer</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/srl-iu/arduino-timer">View on GitHub</a>
+
+          <h1 id="project_title">Arduino-timer</h1>
+          <h2 id="project_tagline">Arduino sketch files to implement timer functionality on the arduino. This can also be used to calibrate an arduino and measure the actual clock frequency for better accuracy.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/srl-iu/arduino-timer/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/srl-iu/arduino-timer/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="arduino-timer" class="anchor" href="#arduino-timer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arduino Timer</h1>
+
+<h2>
+<a id="arduino-overview" class="anchor" href="#arduino-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arduino Overview</h2>
+
+<p>There are many great resources and introductions for getting familiar with an Arduino microcontroller. From <a href="http://www.arduino.cc/">http://www.arduino.cc/</a>, the Arduino homepage:</p>
+
+<blockquote>
+<p>"Arduino is an open-source electronics platform based on easy-to-use hardware and software. It's intended for anyone making interactive projects."</p>
+</blockquote>
+
+<p>An Arduino (or a microcontroller in general) is a small, simple computer that only does one task. It also provides low level access to digital and analog inputs and outputs. This is perfect for a dedicated timing system. </p>
+
+<p>.. image:: images/arduino.jpg</p>
+
+<p>Arduinos are very affordable. Current prices for an assembled version of the latest revision are about $25 (USD). Any Arduino system should work as an external timing device. This document was written with the Arduino UNO model as a reference. </p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>This guide assumes you have set up your computer and Arduino so they can talk to one another, and that you understand how to upload new sketches to the Arduino. These topics are well covered in introductory guides like these:</p>
+
+<p><a href="http://arduino.cc/en/Guide/HomePage">http://arduino.cc/en/Guide/HomePage</a></p>
+
+<p><a href="http://arduino.cc/en/Tutorial/Blink?from=Tutorial.BlinkingLED">http://arduino.cc/en/Tutorial/Blink?from=Tutorial.BlinkingLED</a></p>
+
+<p>If you prefer working from the command line, I highly recommend Ino as a way to build and upload sketches to the Arduino:</p>
+
+<p><a href="http://inotool.org/">http://inotool.org/</a></p>
+
+<p>.. image:: images/arduino-connected.jpg</p>
+
+<p>At this point you should have an Arduino connected to your computer via a USB cable. Start by building and uploading the <code>supplied timer sketch &lt;../../../../src/sketch.ino&gt;</code>_. The sketch requires the "SerialCommand" library which is included, but also available here:</p>
+
+<p><a href="http://awtfy.com/2011/05/23/a-minimal-arduino-library-for-processing-serial-commands/">http://awtfy.com/2011/05/23/a-minimal-arduino-library-for-processing-serial-commands/</a></p>
+
+<p>If using the standard Arduino IDE, you will need to import these libraries directly. In the "Arduino" directory (under "Documents" on OS X), place the included external libraries (/lib) in the "libraries" folder.</p>
+
+<p>When you open up your serial monitor (either the one supplied by the Arduino software package via "Tools"-&gt;"Serial Monitor", or any other that you have configured), you should see the following::</p>
+
+<pre><code>   lablibduino.0.2
+   Ready
+</code></pre>
+
+<p>.. image:: images/serial_monitor-001.png</p>
+
+<p>If not, please check to make sure there were no errors reported when uploading the sketch to your Arduino. </p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>Now it's time to attach something to the Arduino that we can use to create events for the Arduino to detect. Our goal with events is to distill a specific event down to a change in voltage. This gives us a lot of flexibility in the events that we can detect. </p>
+
+<p>An easy one to start with is a stereo audio source. These are available on most computers and a lot of effort has gone in to making them accurate for rendering sounds. Analog audio is sent over cables as an electrical representation of the original; this is what typically drives a speaker to reproduce the sound in the form of audible sound waves. </p>
+
+<p>We can use one channel from the stereo audio signal to trigger a start event and the other channel to trigger a stop event. To connect the audio source to the Arduino, use a cable that connects to the audio source (typically 1/8" stereo connector on many computers), and then strip the wires on the other end of the cable. There should be two wires for each channel: one for the signal and one for the ground. </p>
+
+<p>.. image:: images/stereo_cable.jpg</p>
+
+<p>Using a breadboard, insert a 10K resistor between the two wires for a channel, and then connect a wire before the resistor to one of the analog inputs on the Arduino. Repeat this for the other audio channel. </p>
+
+<p>.. image:: images/stereo_arduino.jpg</p>
+
+<p>Closer view:</p>
+
+<p>.. image:: images/stereo_closeup.jpg</p>
+
+<h2>
+<a id="debug" class="anchor" href="#debug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug</h2>
+
+<p>Now that everything is connected it's helpful to check to make sure that values are being read by the Arduino. The above sketch includes a debug mode to help you see what values are showing up. You can enable it by sending the following command via the serial connection::</p>
+
+<pre><code>  DEBUG A 0
+</code></pre>
+
+<p>The first parameter toggles if you want to look at analog or digital pins / inputs. The second parameter determines which pin to look at. Since I plugged one of the audio channel lead wires into port A0 on the Arduino, the second parameter is 0. If you are using the Serial Monitor that comes with the Arduino IDE, be sure to set "Carriage return" as the line return option. Otherwise commands will not be processed by the sketch on the Arduino. For other serial interfaces, you may need to include a '\r' at the end of the command string. </p>
+
+<p>.. image:: images/debug-001.png</p>
+
+<p>After sending the command (Return, or "Send" button), you should see a message that the debug mode has been started::</p>
+
+<pre><code>  DEBUG MODE STARTED
+</code></pre>
+
+<p>.. image:: images/debug-002.png</p>
+
+<p>Now, if you play an audio file, you should see values reported from the corresponding analog pin (followed by a ',' and a time stamp). </p>
+
+<p>.. image:: images/debug-003.png</p>
+
+<p>Take note of some of the higher values; you'll want to use these when setting thresholds for your event triggers. </p>
+
+<h2>
+<a id="timing-events" class="anchor" href="#timing-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timing Events</h2>
+
+<p>Once everything has been connected and verified, we can start timing events. Create a stereo audio file with tones that start on the right and left channels at different times. <code>Example &lt;../../../../start_stop.wav&gt;</code>_</p>
+
+<p>Now configure the Arduino timer to watch for the audio events. This is done by sending configuration commands over the serial connection. There are 3 main setup commands: 'ARM', 'START', and 'STOP'. </p>
+
+<p>Each of these takes three parameters: </p>
+
+<ol>
+<li>'A' or 'D' 
+(specify if the input pin is analog or digital)</li>
+<li>0 - 12
+(the pin number)</li>
+<li>0 - 1024
+(the threshold value to look for)</li>
+</ol>
+
+<p>'START' is used to specify which pin and what threshold to use to start the timer. Similarly, 'STOP' is used to specify which pin and what threshold to use to stop the timer. </p>
+
+<p>A third, optional configuration command, 'ARM', takes the same 3 parameters as 'START' and 'STOP' and can be used to synchronize the timer with an external system. If 'ARM' is supplied, any 'START' and 'STOP' events will be ignored until after the 'ARM' event happens. Think of this as a clapperboard / film slate for your experiment. For timing the onset of two signals from a stereo audio source, we won't need to use the 'ARM' command. </p>
+
+<p>For this example, the channel that plays sound first is plugged in to pin A0 and the channel that plays sound second is plugged in to pin A1. The threshold is set very low. ::</p>
+
+<pre><code>  START A 0 5
+  STOP A 1 5
+</code></pre>
+
+<p>Once all of the configuration commands have been set, we can start the timer with the 'RUN' command::</p>
+
+<pre><code>  RUN
+</code></pre>
+
+<p>If you've configured this over a serial monitor connection, you should see something like this: </p>
+
+<p>.. image:: images/configuration.png</p>
+
+<p>Now the timer is waiting for our first trigger, 'START'. If all goes well, we should be able to trigger our 'START' and 'STOP' by playing the sound. Try it out!</p>
+
+<p>If all went well you should see something like this:</p>
+
+<p>.. image:: images/results.png</p>
+
+<p>The results show the time in milliseconds when each of the triggers were met. We can find the difference in onset to onset of our start and stop sources by subtracting the started time from the stopped time. In this case, 26308 - 25036 = 1272.</p>
+
+<p>.. image:: images/audacity.png</p>
+
+<p>This is 4ms short of the measured time in audacity. </p>
+
+<h2>
+<a id="calibration" class="anchor" href="#calibration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calibration</h2>
+
+<p>The 4ms difference noted above may be adequate for some situations, but after some simple calibration, we can do even better. </p>
+
+<p>In order to improve the accuracy of the Arduino as a timer, it is important to measure the actual clock speed of your particular Arduino. The actual clock speed does vary from one board to the next (especially from one type of board to the next). This variation makes a difference in the times measured. Fortunately, if you've followed this setup, you now have everything you need to measure the actual clock speed. </p>
+
+<p>Run the included "generate_play_collect.py" script to run some tests. It will make wave files with a random amount of silence separating the two tones, set up your Arduino for measurements, and then log the results from the timing. You may want to adjust the number of trials run in the script. (The number of tests is currently set to 10 in the run_many() function.)</p>
+
+<p>After the tests have been run, you can find the ratio of the frequency mismatch by running "compare_times.py". </p>
+
+<p>Finally, find the variable "clock_adjust" in the "src/sketch.ino" file and update it with the value given from compare_times.py. After you build and upload the sketch to your Arduino, the results will be adjusted by that ratio. These results should be much closer (+/- 500 microseconds) to the actual time measured in the audio file. </p>
+
+<p>For more details about this calibration process, please see <code>"Arduino, Better Timing Through Calibration" &lt;../../../calibration/_build/html/index.html&gt;</code>_.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Arduino-timer maintained by <a href="https://github.com/srl-iu">srl-iu</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-61151688-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
