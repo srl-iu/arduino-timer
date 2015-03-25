@@ -34,8 +34,8 @@
         <h1>
 <a id="arduino-timer" class="anchor" href="#arduino-timer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arduino Timer</h1>
 
-<h2>
-<a id="arduino-overview" class="anchor" href="#arduino-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arduino Overview</h2>
+<h3>
+<a id="arduino-overview" class="anchor" href="#arduino-overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arduino Overview</h3>
 
 <p>There are many great resources and introductions for getting familiar with an Arduino microcontroller. From <a href="http://www.arduino.cc/">http://www.arduino.cc/</a>, the Arduino homepage:</p>
 
@@ -45,15 +45,12 @@
 
 <p>An Arduino (or a microcontroller in general) is a small, simple computer that only does one task. It also provides low level access to digital and analog inputs and outputs. This is perfect for a dedicated timing system. </p>
 
-<p><img src="http://www.iu.edu/%7Esrlweb/random-header/rand14.jpg" alt="">
-<img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/arduino.jpg" alt=""></p>
-
-<p>.. image:: images/arduino.jpg</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/arduino.jpg" alt=""></p>
 
 <p>Arduinos are very affordable. Current prices for an assembled version of the latest revision are about $25 (USD). Any Arduino system should work as an external timing device. This document was written with the Arduino UNO model as a reference. </p>
 
-<h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
 
 <p>This guide assumes you have set up your computer and Arduino so they can talk to one another, and that you understand how to upload new sketches to the Arduino. These topics are well covered in introductory guides like these:</p>
 
@@ -65,9 +62,9 @@
 
 <p><a href="http://inotool.org/">http://inotool.org/</a></p>
 
-<p>.. image:: images/arduino-connected.jpg</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/arduino-connected.jpg" alt=""></p>
 
-<p>At this point you should have an Arduino connected to your computer via a USB cable. Start by building and uploading the <code>supplied timer sketch &lt;../../../../src/sketch.ino&gt;</code>_. The sketch requires the "SerialCommand" library which is included, but also available here:</p>
+<p>At this point you should have an Arduino connected to your computer via a USB cable. Start by building and uploading the <a href="https://github.com/srl-iu/arduino-timer/blob/master/src/sketch.ino">supplied timer sketch</a>. The sketch requires the "SerialCommand" library which is included, but also available here:</p>
 
 <p><a href="http://awtfy.com/2011/05/23/a-minimal-arduino-library-for-processing-serial-commands/">http://awtfy.com/2011/05/23/a-minimal-arduino-library-for-processing-serial-commands/</a></p>
 
@@ -79,12 +76,12 @@
    Ready
 </code></pre>
 
-<p>.. image:: images/serial_monitor-001.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/serial_monitor-001.png" alt=""></p>
 
 <p>If not, please check to make sure there were no errors reported when uploading the sketch to your Arduino. </p>
 
-<h2>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+<h3>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
 
 <p>Now it's time to attach something to the Arduino that we can use to create events for the Arduino to detect. Our goal with events is to distill a specific event down to a change in voltage. This gives us a lot of flexibility in the events that we can detect. </p>
 
@@ -92,18 +89,18 @@
 
 <p>We can use one channel from the stereo audio signal to trigger a start event and the other channel to trigger a stop event. To connect the audio source to the Arduino, use a cable that connects to the audio source (typically 1/8" stereo connector on many computers), and then strip the wires on the other end of the cable. There should be two wires for each channel: one for the signal and one for the ground. </p>
 
-<p>.. image:: images/stereo_cable.jpg</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/stereo_cable.jpg" alt=""></p>
 
 <p>Using a breadboard, insert a 10K resistor between the two wires for a channel, and then connect a wire before the resistor to one of the analog inputs on the Arduino. Repeat this for the other audio channel. </p>
 
-<p>.. image:: images/stereo_arduino.jpg</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/stereo_arduino.jpg" alt=""></p>
 
 <p>Closer view:</p>
 
-<p>.. image:: images/stereo_closeup.jpg</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/stereo_closeup.jpg" alt=""></p>
 
-<h2>
-<a id="debug" class="anchor" href="#debug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug</h2>
+<h3>
+<a id="debug" class="anchor" href="#debug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug</h3>
 
 <p>Now that everything is connected it's helpful to check to make sure that values are being read by the Arduino. The above sketch includes a debug mode to help you see what values are showing up. You can enable it by sending the following command via the serial connection::</p>
 
@@ -112,25 +109,25 @@
 
 <p>The first parameter toggles if you want to look at analog or digital pins / inputs. The second parameter determines which pin to look at. Since I plugged one of the audio channel lead wires into port A0 on the Arduino, the second parameter is 0. If you are using the Serial Monitor that comes with the Arduino IDE, be sure to set "Carriage return" as the line return option. Otherwise commands will not be processed by the sketch on the Arduino. For other serial interfaces, you may need to include a '\r' at the end of the command string. </p>
 
-<p>.. image:: images/debug-001.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/debug-001.png" alt=""></p>
 
 <p>After sending the command (Return, or "Send" button), you should see a message that the debug mode has been started::</p>
 
 <pre><code>  DEBUG MODE STARTED
 </code></pre>
 
-<p>.. image:: images/debug-002.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/debug-002.png" alt=""></p>
 
 <p>Now, if you play an audio file, you should see values reported from the corresponding analog pin (followed by a ',' and a time stamp). </p>
 
-<p>.. image:: images/debug-003.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/debug-003.png" alt=""></p>
 
 <p>Take note of some of the higher values; you'll want to use these when setting thresholds for your event triggers. </p>
 
-<h2>
-<a id="timing-events" class="anchor" href="#timing-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timing Events</h2>
+<h3>
+<a id="timing-events" class="anchor" href="#timing-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timing Events</h3>
 
-<p>Once everything has been connected and verified, we can start timing events. Create a stereo audio file with tones that start on the right and left channels at different times. <code>Example &lt;../../../../start_stop.wav&gt;</code>_</p>
+<p>Once everything has been connected and verified, we can start timing events. Create a stereo audio file with tones that start on the right and left channels at different times. <a href="https://github.com/srl-iu/arduino-timer/blob/master/start_stop.wav">Example</a></p>
 
 <p>Now configure the Arduino timer to watch for the audio events. This is done by sending configuration commands over the serial connection. There are 3 main setup commands: 'ARM', 'START', and 'STOP'. </p>
 
@@ -162,22 +159,25 @@
 
 <p>If you've configured this over a serial monitor connection, you should see something like this: </p>
 
-<p>.. image:: images/configuration.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/configuration.png" alt=""></p>
 
 <p>Now the timer is waiting for our first trigger, 'START'. If all goes well, we should be able to trigger our 'START' and 'STOP' by playing the sound. Try it out!</p>
 
 <p>If all went well you should see something like this:</p>
 
-<p>.. image:: images/results.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/results.png" alt=""></p>
 
 <p>The results show the time in milliseconds when each of the triggers were met. We can find the difference in onset to onset of our start and stop sources by subtracting the started time from the stopped time. In this case, 26308 - 25036 = 1272.</p>
 
-<p>.. image:: images/audacity.png</p>
+<p><img src="https://raw.githubusercontent.com/srl-iu/arduino-timer/gh-pages/images/audacity.png" alt=""></p>
 
 <p>This is 4ms short of the measured time in audacity. </p>
 
-<h2>
-<a id="calibration" class="anchor" href="#calibration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calibration</h2>
+<h1>
+<a id="calibration" class="anchor" href="#calibration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calibration</h1>
+
+<h3>
+<a id="short-version" class="anchor" href="#short-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Short Version</h3>
 
 <p>The 4ms difference noted above may be adequate for some situations, but after some simple calibration, we can do even better. </p>
 
@@ -189,7 +189,41 @@
 
 <p>Finally, find the variable "clock_adjust" in the "src/sketch.ino" file and update it with the value given from compare_times.py. After you build and upload the sketch to your Arduino, the results will be adjusted by that ratio. These results should be much closer (+/- 500 microseconds) to the actual time measured in the audio file. </p>
 
-<p>For more details about this calibration process, please see <code>"Arduino, Better Timing Through Calibration" &lt;../../../calibration/_build/html/index.html&gt;</code>_.</p>
+<h3>
+<a id="a-little-more-detail" class="anchor" href="#a-little-more-detail" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Little More Detail</h3>
+
+<p>The clock frequency for Arduino microcontrollers is approximated for different types of Arduino devices. Although this estimate is good enough for many timing based applications, it is not ideal when trying to use the Arduino to measure timing of events more accurately. To improve this accuracy, it is possible to measure the clock frequency of a specific Arduino for use as a better approximation in sketches. Here we outline one simple approach for making this measurement.</p>
+
+<p>Deep in the heart of the Arduino software is a setting that defines the expected clock frequency for a given board. (The variable is called F_CPU and in my case it is found in a file called boards.txt. YMMV.) For many Arduino boards, this is set to a default value of "16000000L", or 16MHz. </p>
+
+<p>However, not all Arduino microcontrollers are the same. Some use crystal oscillators for the clock, while others use ceramic resonators. These each have their own pros and cons with regard to the stability of the clock. They are similar in that neither are likely to match the default value of 16MHz exactly. Some may be faster than the specified default, some may be slower. </p>
+
+<p>For many timing sensitive applications, like serial communication, there is a built in tolerance for this variation. As long as the times are close enough, everything still works as expected. </p>
+
+<p>When using the Arduino as a clock to measure events over longer periods of time (say, a few seconds or more), the mismatch in frequency shows up as drift in the measured values. If the actual clock value is faster than the default specified, more cycles will be counted than the number expected to happen within the time. This results in reported times that are longer than they should be. Inversely, if the actual clock value is slower than the default, fewer cycles will be counted than the number expected for the time. Measured times will be reported as shorter than they should be. Over longer periods of time, this discrepancy will get more and more noticeable. </p>
+
+<p>This frequency mismatch is one of the largest sources of timing errors for the Arduino. Fortunately it is easy to measure and correct for. </p>
+
+<p>For details about other sources of errors in the times reported by an Arduino, and an alternative approach for measuring these errors, please see here:</p>
+
+<p><a href="http://jorisvr.nl/arduino_frequency.html">http://jorisvr.nl/arduino_frequency.html</a></p>
+
+<h3>
+<a id="measuring-the-discrepancy" class="anchor" href="#measuring-the-discrepancy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring the Discrepancy</h3>
+
+<p>To make measurements, we use an audio source signal whose measurements are already known and play and measure it as before. By playing that source signal and then comparing the results measured by the Arduino, we'll start to get an idea of how much the measurements from the Arduino are off by. </p>
+
+<p>This process is automated by the included <a href="https://github.com/srl-iu/arduino-timer/blob/master/generate_play_collect.py">generate_play_collect.py</a> script. This script will generate an audio file where the tone on one channel starts playing immediately. This is the tone that will trigger the START event. The other channel does not start until after a random (but measured) amount of time. This triggers the STOP event. The generated file is played three times, and the results are collected after each play. At the end of those three plays, the results are logged to a CSV file and the process is repeated. You can configure the number of times it repeats by editing the script. </p>
+
+<h3>
+<a id="adjusting-results" class="anchor" href="#adjusting-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adjusting Results</h3>
+
+<p>After generate_play_collect completes, the results can be processed with <a href="https://github.com/srl-iu/arduino-timer/blob/master/compare_times.py">compare_times.py</a>. This script will look at the previously created output and average all of the differences. At the end it will print:</p>
+
+<pre><code>   frequency mismatch (clock_adjust):
+</code></pre>
+
+<p>Take that value and change the corresponding 'clock_adjust' variable in the main sketch.ino file. After saving this change, you will need to re-build and re-upload the sketch to your Arduino. Now, if you run the test again, the reported times should be much more accurate (+/- 500 micro seconds). </p>
       </section>
     </div>
 
