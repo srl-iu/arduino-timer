@@ -41,3 +41,4 @@ Resources used (copies included):
 
 More documentation coming soon...
 
+See: [http://srl-iu.github.io/arduino-timer/](http://srl-iu.github.io/arduino-timer/) for more details.
