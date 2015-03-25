@@ -1,0 +1,19 @@
+# use glob syntax.
+syntax: glob
+
+*.elc
+*.pyc
+*~
+*\#
+.*.swp
+.DS_Store
+.Trashes*
+.Spotlight-V100*
+.fseventsd*
+*.zip
+
+
+# switch to regexp syntax.
+syntax: regexp
+\.build
+output*
